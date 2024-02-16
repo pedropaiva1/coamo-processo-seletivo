@@ -49,3 +49,56 @@ GrupoProduto:
     descricao: string
 
 ```
+
+# Cardinalidades:
+
+Cooperativa
+
+```
+Possui (1:N) -> Unidade 
+```
+
+
+Unidade
+
+```
+Fornece (N:N) -> Cooperado 
+Fornece (N:N) -> Produto 
+```
+
+
+Cooperado 
+
+```
+É (1:1) -> Pessoa Física
+É (1:1) -> Pessoa Jurídica 
+```
+
+
+Pessoa Física 
+
+```
+Pertence (1:N) -> Cooperado
+```
+
+
+Pessoa Jurídica 
+
+```
+Pertence (1:N) -> Cooperado
+Possui (1:N) -> Sócio
+```
+
+
+Sócio
+
+
+```
+Pertence (1:N) -> Pessoa Jurídica
+```
+
+Produto 
+
+```
+Pertence (N:N) -> Grupo de Produto
+```

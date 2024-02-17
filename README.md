@@ -3,102 +3,78 @@
 Modelo Entidade Relacionamento (MER):
 
 ```
-Cooperativa:
-    codigo: inteiro
-    nome: string
-    endereço: string
-    estado: string
+Cooperativa
+-----------
+codigo (PK)
+nome
+endereco
+estado
 
-Unidade:
-    codigo: inteiro
-    nome: string
-    município: string
-    cooperativa: Cooperativa
+Unidade
+-------
+codigo (PK)
+nome
+municipio
+cooperativa_codigo (FK)
 
-Cooperado:
-    codigo: inteiro
-    tipo: string ("Pessoa Física", "Pessoa Jurídica")
-    conceito: string ("A", "B", "C")
+Cooperado
+---------
+codigo (PK)
+tipo ("Pessoa Física" ou "Pessoa Jurídica")
+cpf (FK - referenciando PessoaFisica)
+cnpj (FK - referenciando PessoaJuridica)
 
-PessoaFisica:
-    cpf: string
-    rg: string
-    estadoCivil: string
-    dataNascimento: data
-    cooperado: Cooperado
+PessoaFisica
+------------
+cpf (PK)
+rg
+estadoCivil
+dataNascimento
 
-PessoaJuridica:
-    cnpj: string
-    dataFundacao: data
-    cooperado: Cooperado
+PessoaJuridica
+--------------
+cnpj (PK)
+dataFundacao
 
-Socio:
-    cpf: string
-    rg: string
-    nacionalidade: string (opcional)
-    pessoaJuridica: PessoaJuridica
+Conceito_Cooperado
+-----------------
+codigo (PK)
+conceito ("A", "B", "C")
+cooperado_codigo (FK)
 
-Produto:
-    codigo: inteiro
-    nomeComercial: string
-    formulaPrincipioAtivo: string
-    unidadeMedida: string
+Socio
+-----
+nome
+email
+telefone
+nacionalidade
+pessoaJuridica_cnpj (FK)
 
-GrupoProduto:
-    codigo: inteiro
-    descricao: string
+Produto
+-------
+codigo (PK)
+nomeComercial
+formulaPrincipioAtivo
+unidadeMedida
 
+GrupoProduto
+------------
+codigo (PK)
+tipo (Fertilizantes, Corretivos, Herbicidas, Fungicidas, Inseticidas)
+
+Fornecimento
+------------
+numeroFornecimento (PK)
+unidade_codigo (FK)
+cooperado_codigo (FK)
+produto_codigo (FK)
+quantidade
+data
+
+Produto_GrupoProduto
+--------------------
+produto_codigo (PK, FK)
+grupoProduto_codigo (PK, FK)
 ```
 
 # Cardinalidades:
-
-Cooperativa
-
-```
-Possui (1:N) -> Unidade 
-```
-
-
-Unidade
-
-```
-Fornece (N:N) -> Cooperado 
-Fornece (N:N) -> Produto 
-```
-
-
-Cooperado 
-
-```
-É (1:1) -> Pessoa Física
-É (1:1) -> Pessoa Jurídica 
-```
-
-
-Pessoa Física 
-
-```
-Pertence (1:N) -> Cooperado
-```
-
-
-Pessoa Jurídica 
-
-```
-Pertence (1:N) -> Cooperado
-Possui (1:N) -> Sócio
-```
-
-
-Sócio
-
-
-```
-Pertence (1:N) -> Pessoa Jurídica
-```
-
-Produto 
-
-```
-Pertence (N:N) -> Grupo de Produto
-```
